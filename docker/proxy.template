@@ -1,0 +1,17 @@
+server {
+    listen          80;
+    server_name     _;
+    root            ${ROOT_DIR};
+    index           index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        
+        fastcgi_pass      ${PHP_BACKEND}:${PHP_PORT};
+        fastcgi_index     index.php;
+        include           fastcgi.conf;
+    }
+}
